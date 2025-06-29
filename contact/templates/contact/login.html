@@ -1,0 +1,65 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+  <div class="form-wrapper">
+
+    <h2>Login</h2>
+
+    {% if user.is_authenticated %}
+    <p>Você está logado. <a href='{% url "contact:logout" %}'>Clique aqui</a> para sair. </p>
+
+    {% else %}
+    <form 
+      action="{{ form_action }}"
+      method="POST"
+    >
+
+    {% csrf_token %}
+
+    {% for field in form %}
+
+      <div class="form-content">
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {{ field.errors }}
+        </div>
+      </div>
+
+      {% if field.help_text %}
+      <p class="help-text">{{ field.help_text }}</p>
+      {% endif %}
+
+    {% endfor %}
+
+    {% if form.non_field_errors %}
+      <div class="form-content">
+        <div class="form-group">
+          <span class="message error">
+          <p>{{ form.non_field_errors }}</p>
+          </span>
+        </div>
+      </div>
+    {% endif %}
+
+      <div class="form-content">
+        <div class="form-group">
+          <button class="btn" type="submit">Send</button>
+        </div>
+      </div>
+
+    </form>
+    {% endif %}
+    
+    <div class="form-content">
+        <div class="form-group">
+            <a href="{% url "contact:register" %}"><button class="btn" type="submit">Novo usuário</button></a>
+        </div>
+    </div>
+
+  </div>
+{% endblock content %}
+
+
+
+

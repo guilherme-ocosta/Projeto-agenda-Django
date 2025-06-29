@@ -1,0 +1,69 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+
+{% if page_obj %}
+<div class="responsive-table">
+    <table class="contacts-table">
+        <caption class="table-caption">Contacts</caption>
+        <thead>
+            <tr class="table-row table-row-header">
+                <th class="table-header">ID</th>
+                <th class="table-header">First name</th>
+                <th class="table-header">Last Name</th>
+                <th class="table-header">Phone</th>
+                <th class="table-header">E-mail</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in page_obj %}
+            <tr class="table-row">
+                <td class="table-cel">
+                    <a class="table-link"  href="{% url 'contact:contact' contact.id %}">{{contact.id}}</a>
+                </td>
+                <td class="table-cel">
+                    {{contact.first_name}}
+                </td>
+                <td class="table-cel">
+                    {{contact.last_name}}
+                </td>
+                <td class="table-cel">
+                    {{contact.phone}}
+                </td>
+                <td class="table-cel">
+                    {{contact.email}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1&q={{ search_value }}">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}&q={{ search_value }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&q={{ search_value }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&q={{ search_value }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+{% else %}
+<div>
+    <h1 style="text-align: center;">Nenhum dado encontrado</h1>
+</div>
+
+{% endif %}
+{% endblock content %}
+
+
+
+
+
